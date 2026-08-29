@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Java: Entendendo Variáveis</title>
+<style>
+  :root {
+    --bg: #1e1e2e;
+    --panel: #27293d;
+    --accent: #f78c3c;
+    --accent2: #6cc7a1;
+    --text: #e8e8f0;
+    --muted: #a3a3b8;
+    --code-bg: #14141f;
+    --border: #3a3a52;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: linear-gradient(180deg, #16161f, #1e1e2e 400px);
+    color: var(--text);
+    line-height: 1.7;
+  }
+  .wrap {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 32px 20px 80px;
+  }
+  header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  header .tag {
+    display: inline-block;
+    background: var(--accent);
+    color: #1e1e2e;
+    font-weight: 700;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+    margin-bottom: 14px;
+  }
+  h1 {
+    font-size: 2rem;
+    margin: 0 0 10px;
+  }
+  header p {
+    color: var(--muted);
+    max-width: 560px;
+    margin: 0 auto;
+  }
+  .step {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px 26px;
+    margin-bottom: 26px;
+    position: relative;
+  }
+  .step::before {
+    content: attr(data-n);
+    position: absolute;
+    top: -14px;
+    left: 22px;
+    background: var(--accent);
+    color: #1e1e2e;
+    font-weight: 800;
+    font-size: 0.85rem;
+    padding: 4px 12px;
+    border-radius: 20px;
+  }
+  .step h2 {
+    margin-top: 8px;
+    font-size: 1.35rem;
+    color: var(--accent2);
+  }
+  .step p { margin: 10px 0; }
+  pre {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 18px;
+    overflow-x: auto;
+    font-size: 0.92rem;
+    margin: 14px 0;
+  }
+  code {
+    font-family: 'Fira Code', Consolas, monospace;
+  }
+  .inline-code {
+    background: var(--code-bg);
+    padding: 2px 6px;
+    border-radius: 5px;
+    font-family: Consolas, monospace;
+    font-size: 0.9em;
+    color: var(--accent2);
+  }
+  .kw { color: #f78c3c; }
+  .str { color: #b5e08c; }
+  .cm { color: #6c7086; font-style: italic; }
+  .ty { color: #7fb4ff; }
+  .box {
+    background: #23233a;
+    border-left: 4px solid var(--accent2);
+    padding: 12px 16px;
+    border-radius: 6px;
+    margin: 14px 0;
+    font-size: 0.95rem;
+  }
+  .box.warn {
+    border-left-color: #f78c3c;
+  }
+  .box strong { color: var(--accent2); }
+  .box.warn strong { color: var(--accent); }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0;
+    font-size: 0.92rem;
+  }
+  th, td {
+    border: 1px solid var(--border);
+    padding: 8px 12px;
+    text-align: left;
+  }
+  th {
+    background: #2f314a;
+    color: var(--accent2);
+  }
+  .exercise {
+    background: #262a3d;
+    border: 1px dashed var(--accent2);
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin-top: 16px;
+  }
+  .exercise h3 {
+    margin: 0 0 8px;
+    color: var(--accent);
+    font-size: 1rem;
+  }
+  footer {
+    text-align: center;
+    color: var(--muted);
+    margin-top: 50px;
+    font-size: 0.85rem;
+  }
+  .nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin: 24px 0 40px;
+  }
+  .nav a {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    color: var(--text);
+    text-decoration: none;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    transition: 0.2s;
+  }
+  .nav a:hover {
+    background: var(--accent);
+    color: #1e1e2e;
+    border-color: var(--accent);
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <span class="tag">APRENDENDO JAVA · VARIÁVEIS</span>
+    <h1>Entendendo Variáveis em Java</h1>
+    <p>Variáveis são a base de tudo em programação: é como o seu programa guarda, lembra e manipula informações. Neste guia você vai entender o que são, como criá-las e os cuidados que evitam os erros mais comuns de quem está começando.</p>
+  </header>
+
+  <nav class="nav">
+    <a href="#o-que-e">O que é uma variável</a>
+    <a href="#declarando">Declarando e inicializando</a>
+    <a href="#regras-nomes">Regras de nomes</a>
+    <a href="#tipos">Tipos de dados</a>
+    <a href="#reatribuindo">Reatribuindo valores</a>
+    <a href="#constantes">Variáveis que não mudam</a>
+    <a href="#erros">Erros comuns</a>
+    <a href="#pratique">Pratique</a>
+  </nav>
+
+  <section class="step" id="o-que-e" data-n="1">
+    <h2>O que é uma variável?</h2>
+    <p>Imagine uma <strong>caixa com etiqueta</strong>. Você escreve um nome na etiqueta (por exemplo, "idade") e guarda um valor dentro dela (por exemplo, 25). Sempre que precisar desse valor, basta chamar a caixa pelo nome — sem precisar lembrar o valor exato o tempo todo.</p>
+    <p>Em programação, uma <strong>variável</strong> é exatamente isso: um espaço nomeado na memória do computador, usado para guardar um valor que pode ser lido e, na maioria dos casos, alterado depois.</p>
+    <div class="box">
+      <strong>Por que isso importa?</strong> Sem variáveis, todo programa seria fixo — sempre faria a mesma coisa, com os mesmos valores. Com variáveis, o programa pode reagir a entradas diferentes, guardar resultados de cálculos e tomar decisões.
+    </div>
+  </section>
+
+  <section class="step" id="declarando" data-n="2">
+    <h2>Declarando e inicializando uma variável</h2>
+    <p>Em Java, criar uma variável envolve dois conceitos que podem vir juntos ou separados:</p>
+    <ul>
+      <li><strong>Declarar</strong> — dizer ao Java o tipo e o nome da variável.</li>
+      <li><strong>Inicializar</strong> — dar um valor inicial a ela.</li>
+    </ul>
+    <pre><code><span class="cm">// Declarando e inicializando na mesma linha</span>
+<span class="ty">int</span> idade = <span class="str">25</span>;
+
+<span class="cm">// Declarando primeiro, inicializando depois</span>
+<span class="ty">int</span> idade;
+idade = <span class="str">25</span>;</code></pre>
+    <p>A estrutura geral é sempre: <span class="inline-code">tipo nome = valor;</span> — não esqueça do ponto e vírgula no final, ele marca o fim do comando.</p>
+    <div class="box warn">
+      <strong>Atenção:</strong> se você declarar uma variável sem inicializá-la e tentar usá-la antes de dar um valor, o Java vai recusar a compilar o programa, com o erro <span class="inline-code">variable might not have been initialized</span>.
+    </div>
+  </section>
+
+  <section class="step" id="regras-nomes" data-n="3">
+    <h2>Regras e boas práticas para nomear variáveis</h2>
+    <p>Nem todo nome é válido, e nem todo nome válido é uma boa escolha. Regras obrigatórias do Java:</p>
+    <ul>
+      <li>Pode conter letras, números, <span class="inline-code">_</span> e <span class="inline-code">$</span>, mas <strong>não pode começar com número</strong>.</li>
+      <li>Não pode ser uma palavra reservada da linguagem, como <span class="inline-code">class</span>, <span class="inline-code">int</span> ou <span class="inline-code">public</span>.</li>
+      <li>É <strong>case-sensitive</strong>: <span class="inline-code">idade</span> e <span class="inline-code">Idade</span> são variáveis diferentes.</li>
+    </ul>
+    <p>Além das regras obrigatórias, existe uma convenção que todo programador Java segue — o <strong>camelCase</strong>: a primeira palavra em minúsculas, e cada palavra seguinte começando com maiúscula.</p>
+    <table>
+      <tr><th>Nome</th><th>Válido?</th><th>Motivo</th></tr>
+      <tr><td><span class="inline-code">nomeCompleto</span></td><td>✅ Ideal</td><td>segue o camelCase</td></tr>
+      <tr><td><span class="inline-code">idade2</span></td><td>✅ Válido</td><td>números são permitidos, só não no início</td></tr>
+      <tr><td><span class="inline-code">2idade</span></td><td>❌ Inválido</td><td>não pode começar com número</td></tr>
+      <tr><td><span class="inline-code">class</span></td><td>❌ Inválido</td><td>é palavra reservada do Java</td></tr>
+      <tr><td><span class="inline-code">x</span></td><td>⚠️ Evite</td><td>funciona, mas não diz nada sobre o que guarda</td></tr>
+    </table>
+    <div class="box">
+      <strong>Dica:</strong> escolha nomes que expliquem o propósito da variável. <span class="inline-code">precoTotal</span> é muito mais claro do que <span class="inline-code">pt</span> ou <span class="inline-code">valor</span>, especialmente quando o programa cresce.
+    </div>
+  </section>
+
+  <section class="step" id="tipos" data-n="4">
+    <h2>O tipo define o que a variável pode guardar</h2>
+    <p>Diferente de linguagens como Python, em Java você precisa avisar o tipo de dado logo na declaração — isso se chama <strong>tipagem estática</strong>. Uma vez definido, o tipo não muda.</p>
+    <table>
+      <tr><th>Tipo</th><th>Guarda</th><th>Exemplo</th></tr>
+      <tr><td><span class="inline-code">int</span></td><td>números inteiros</td><td><span class="inline-code">int quantidade = 10;</span></td></tr>
+      <tr><td><span class="inline-code">double</span></td><td>números com casas decimais</td><td><span class="inline-code">double altura = 1.75;</span></td></tr>
+      <tr><td><span class="inline-code">boolean</span></td><td>verdadeiro ou falso</td><td><span class="inline-code">boolean ativo = true;</span></td></tr>
+      <tr><td><span class="inline-code">char</span></td><td>um único caractere</td><td><span class="inline-code">char inicial = 'J';</span></td></tr>
+      <tr><td><span class="inline-code">String</span></td><td>texto (sequência de caracteres)</td><td><span class="inline-code">String cidade = "Recife";</span></td></tr>
+    </table>
+    <pre><code><span class="ty">int</span> quantidade = <span class="str">10</span>;
+<span class="ty">double</span> altura = <span class="str">1.75</span>;
+<span class="ty">boolean</span> ativo = <span class="kw">true</span>;
+<span class="ty">char</span> inicial = <span class="str">'J'</span>;
+String cidade = <span class="str">"Recife"</span>;</code></pre>
+    <div class="box warn">
+      <strong>Repare nas aspas:</strong> texto (<span class="inline-code">String</span>) usa aspas duplas <span class="inline-code">"assim"</span>, enquanto um único caractere (<span class="inline-code">char</span>) usa aspas simples <span class="inline-code">'assim'</span>. Trocar uma pela outra gera erro de compilação.
+    </div>
+    <p>Tentar guardar um valor do tipo errado numa variável também gera erro. Por exemplo, isto não compila:</p>
+    <pre><code><span class="ty">int</span> idade = <span class="str">"vinte e cinco"</span>; <span class="cm">// erro: String não é int</span></code></pre>
+  </section>
+
+  <section class="step" id="reatribuindo" data-n="5">
+    <h2>Reatribuindo valores</h2>
+    <p>Depois de criada, uma variável comum pode receber um novo valor a qualquer momento — desde que seja do mesmo tipo:</p>
+    <pre><code><span class="ty">int</span> pontuacao = <span class="str">0</span>;
+System.out.println(pontuacao); <span class="cm">// 0</span>
+
+pontuacao = <span class="str">10</span>;
+System.out.println(pontuacao); <span class="cm">// 10</span>
+
+pontuacao = pontuacao + <span class="str">5</span>;
+System.out.println(pontuacao); <span class="cm">// 15</span></code></pre>
+    <p>Repare na última linha: <span class="inline-code">pontuacao = pontuacao + 5;</span> pega o valor atual da variável, soma 5, e guarda o resultado de volta na mesma variável. Isso é extremamente comum em programação — tão comum que Java tem um atalho:</p>
+    <pre><code>pontuacao += <span class="str">5</span>; <span class="cm">// mesmo efeito de "pontuacao = pontuacao + 5"</span></code></pre>
+    <p>Esse atalho também existe para as outras operações: <span class="inline-code">-=</span>, <span class="inline-code">*=</span>, <span class="inline-code">/=</span>.</p>
+  </section>
+
+  <section class="step" id="constantes" data-n="6">
+    <h2>Quando o valor não deve mudar: <span class="inline-code">final</span></h2>
+    <p>Às vezes você quer garantir que um valor nunca seja alterado depois de definido — por exemplo, o valor de um imposto fixo ou o número de dias da semana. Para isso, usamos a palavra-chave <span class="inline-code">final</span>:</p>
+    <pre><code><span class="kw">final</span> <span class="ty">int</span> DIAS_DA_SEMANA = <span class="str">7</span>;</code></pre>
+    <p>Se você tentar mudar o valor depois, o Java recusa a compilar:</p>
+    <pre><code>DIAS_DA_SEMANA = <span class="str">10</span>; <span class="cm">// erro: cannot assign a value to final variable</span></code></pre>
+    <div class="box">
+      <strong>Convenção:</strong> constantes (variáveis <span class="inline-code">final</span>) costumam ser escritas em <strong>MAIÚSCULAS</strong>, com underline separando as palavras — isso ajuda a identificá-las rapidamente no meio do código.
+    </div>
+  </section>
+
+  <section class="step" id="erros" data-n="7">
+    <h2>Erros comuns com variáveis</h2>
+    <table>
+      <tr><th>Erro</th><th>Causa provável</th></tr>
+      <tr><td><span class="inline-code">variable might not have been initialized</span></td><td>tentou usar a variável antes de dar um valor a ela</td></tr>
+      <tr><td><span class="inline-code">incompatible types</span></td><td>tentou guardar um valor de um tipo dentro de uma variável de outro tipo</td></tr>
+      <tr><td><span class="inline-code">cannot find symbol</span></td><td>usou o nome da variável escrito de forma diferente de como foi declarada (lembre-se: case-sensitive)</td></tr>
+      <tr><td><span class="inline-code">cannot assign a value to final variable</span></td><td>tentou alterar o valor de uma variável declarada com <span class="inline-code">final</span></td></tr>
+      <tr><td><span class="inline-code">variable already defined</span></td><td>declarou duas variáveis com o mesmo nome no mesmo bloco de código</td></tr>
+    </table>
+  </section>
+
+  <section class="step exercise" id="pratique" data-n="8">
+    <h2>🎯 Agora é sua vez</h2>
+    <p>Crie um novo arquivo <span class="inline-code">TestandoVariaveis.java</span> e pratique:</p>
+    <ul>
+      <li>Declare uma variável <span class="inline-code">String</span> com seu nome e uma <span class="inline-code">int</span> com sua idade, e imprima as duas juntas numa frase.</li>
+      <li>Crie uma variável <span class="inline-code">double</span> chamada <span class="inline-code">precoProduto</span>, depois reatribua um novo valor a ela usando <span class="inline-code">+=</span>.</li>
+      <li>Declare uma constante <span class="inline-code">final</span> chamada <span class="inline-code">TAXA_ENTREGA</span> e tente (de propósito) alterar o valor dela depois — observe o erro que o Java mostra.</li>
+    </ul>
+  </section>
+
+  <section class="step" data-n="✓">
+    <h2>Para onde ir agora</h2>
+    <p>Com variáveis bem entendidas, o próximo passo natural é aprender sobre <strong>operadores</strong> (matemáticos e de comparação) e, em seguida, <strong>estruturas condicionais</strong> (<span class="inline-code">if</span>/<span class="inline-code">else</span>) — é aí que o programa começa a tomar decisões com base nos valores guardados.</p>
+  </section>
+
+  <footer>
+    Me siga para acompanhar essa série de repositórios <em>aprendendo-java</em> 🚀
+  </footer>
+
+</div>
+</body>
+</html>
